@@ -1,0 +1,395 @@
+:root {
+    --bg-dark: #121212;
+    --bg-darker: #0d0d0d;
+    --accent-1: #4cc9f0; /* Azul claro */
+    --accent-2: #f72585; /* Rosa */
+    --accent-3: #7209b7; /* Roxo */
+    --accent-4: #3a86ff; /* Azul */
+    --text: #e0e0e0;
+    --text-light: #ffffff;
+    --code-bg: #1e1e2e;
+    --success: #4ade80; /* Verde */
+    --warning: #fbbf24; /* Amarelo */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    background-color: var(--bg-dark);
+    color: var(--text);
+    line-height: 1.6;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(114, 9, 183, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(74, 201, 240, 0.1) 0%, transparent 20%);
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+header {
+    background-color: var(--bg-darker);
+    padding: 3rem 2rem;
+    border-bottom: 2px solid var(--accent-3);
+    position: relative;
+    overflow: hidden;
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3), var(--accent-4));
+    animation: gradientBG 8s ease infinite;
+    background-size: 400% 400%;
+}
+
+h1, h2, h3, h4 {
+    margin: 1.5rem 0;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2.8rem;
+    text-align: center;
+    background: linear-gradient(90deg, var(--accent-1), var(--accent-4));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientBG 8s ease infinite;
+    background-size: 200% 200%;
+}
+
+h2 {
+    font-size: 2.2rem;
+    border-bottom: 1px solid var(--accent-3);
+    padding-bottom: 0.5rem;
+    color: var(--accent-1);
+    margin-top: 3rem;
+    position: relative;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100px;
+    height: 3px;
+    background: var(--accent-2);
+}
+
+h3 {
+    font-size: 1.7rem;
+    margin-top: 2.5rem;
+    color: var(--accent-4);
+}
+
+h4 {
+    font-size: 1.3rem;
+    color: var(--accent-3);
+}
+
+nav {
+    background-color: var(--bg-darker);
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 280px;
+    padding: 2rem 1.5rem;
+    overflow-y: auto;
+    border-right: 1px solid rgba(114, 9, 183, 0.2);
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav li {
+    margin: 1.2rem 0;
+    position: relative;
+    transition: transform 0.3s;
+}
+
+nav li:hover {
+    transform: translateX(5px);
+}
+
+nav li::before {
+    content: '›';
+    position: absolute;
+    left: -15px;
+    transform: translateY(15%);
+    color: var(--accent-2);
+    opacity: 0;
+    transition: opacity 0.3s, left 0.3s;
+}
+
+nav li:hover::before {
+    opacity: 1;
+    left: -10px;
+}
+
+nav a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s;
+    display: block;
+    padding: 0.3rem 0;
+}
+
+nav a:hover {
+    color: var(--accent-1);
+}
+
+main {
+    margin-left: 280px;
+    padding: 3rem;
+    max-width: 1000px;
+}
+
+code, pre {
+    background-color: var(--code-bg);
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    border-left: 3px solid var(--accent-4);
+}
+
+pre {
+    padding: 1.2rem;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+
+pre:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+pre::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3), var(--accent-4));
+    opacity: 0.1;
+    border-radius: 8px 8px 0 0;
+}
+
+.method, .property {
+    background-color: var(--bg-darker);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-left: 4px solid var(--accent-3);
+}
+
+.method:hover, .property:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.method-name, .property-name {
+    font-weight: bold;
+    color: var(--accent-1);
+    font-size: 1.2rem;
+}
+
+.params, .returns {
+    margin: 0.8rem 0;
+}
+
+.param {
+    display: flex;
+    margin: 0.5rem 0;
+    align-items: baseline;
+}
+
+.param-name {
+    min-width: 120px;
+    color: var(--accent-2);
+    font-weight: 500;
+}
+
+.example {
+    margin: 2rem 0;
+    position: relative;
+}
+
+.example-title {
+    color: var(--warning);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.example-title::before {
+    content: '✦';
+    margin-right: 0.5rem;
+    color: var(--accent-4);
+}
+
+footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    margin-top: 4rem;
+    border-top: 1px solid rgba(114, 9, 183, 0.3);
+    position: relative;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3), var(--accent-4));
+    animation: gradientBG 8s ease infinite;
+    background-size: 400% 400%;
+}
+
+@media (max-width: 992px) {
+    nav {
+        width: 240px;
+        padding: 1.5rem 1rem;
+    }
+    
+    main {
+        margin-left: 240px;
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    nav {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid rgba(114, 9, 183, 0.2);
+    }
+
+    #navbar {
+        display: flex;
+        font-size: 15px;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    #navbar * {
+        margin: 0;
+    }
+    
+    main {
+        margin-left: 0;
+        padding: 2rem 1.5rem;
+    }
+    
+    h1 {
+        font-size: 2.2rem;
+    }
+    
+    h2 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Animações e efeitos */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.floating {
+    animation: float 4s ease-in-out infinite;
+}
+
+.highlight {
+    position: relative;
+    display: inline-block;
+}
+
+.highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background-color: rgba(247, 37, 133, 0.3);
+    z-index: -1;
+    transition: height 0.3s;
+}
+
+.highlight:hover::after {
+    height: 50%;
+}
+
+/* Botões e interações */
+.copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: var(--text);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem;
+}
+
+.copy-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.copy-btn.copied {
+    background: var(--success);
+    color: var(--bg-darker);
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-darker);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-2);
+}

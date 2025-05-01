@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ready2D Engine - Documentação</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <h3>Ready2D</h3>
+        <ul id="navbar">
+            <li><a href="#introducao">Introdução</a></li>
+            <li><a href="#iniciando">Iniciando</a></li>
+            <li><a href="#engine">Classe Engine</a></li>
+            <li><a href="#sprite">Classe Sprite</a></li>
+            <li><a href="#physics">Sistema de Física</a></li>
+            <li><a href="#camera">Controle de Câmera</a></li>
+            <li><a href="#input">Sistema de Input</a></li>
+            <li><a href="#joystick">Joystick Virtual</a></li>
+            <li><a href="#gui">Interface Gráfica</a></li>
+            <li><a href="#transicoes">Transições de Cena</a></li>
+            <li><a href="#exemplos">Exemplos Práticos</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <header>
+            <h1>Ready2D Engine</h1>
+            <p>Uma engine 2D simples e pronta para uso em JavaScript</p>
+        </header>
+        
+        <section id="introducao">
+            <h2>Introdução</h2>
+            <p>A Ready2D é uma engine de jogos 2D leve e fácil de usar, desenvolvida para prototipagem rápida e projetos simples. Ela oferece:</p>
+            <ul>
+                <li>Renderização 2D básica</li>
+                <li>Sistema de física simples</li>
+                <li>Controle de câmera</li>
+                <li>Input para teclado e touch</li>
+                <li>Joystick virtual para mobile</li>
+                <li>Elementos de UI básicos</li>
+                <li>Transições entre cenas</li>
+            </ul>
+        </section>
+        
+        <section id="iniciando">
+            <h2>Iniciando</h2>
+            <p>Para começar a usar a Ready2D, basta incluir o código da engine em seu projeto HTML:</p>
+            
+            <pre><code>&lt;script src="ready2d.js"&gt;&lt;/script&gt;</code></pre>
+            
+            <p>Ou copie todo o código da engine diretamente em um arquivo JavaScript.</p>
+            
+            <h3>Primeiro Projeto</h3>
+            <p>Aqui está um exemplo básico de como criar um jogo simples:</p>
+            
+            <div class="example">
+                <pre><code>// Cria uma nova instância da engine
+const game = new Engine({
+    title: "Meu Primeiro Jogo",
+    width: 800,
+    height: 600,
+    background: "#222"
+});
+
+// Cria um sprite
+const player = new Sprite({
+    x: 0,
+    y: 0,
+    width: 50,
+    height: 50,
+    color: "#ff8c42"
+});
+
+// Adiciona o sprite à engine
+game.add(player);
+
+// Configura a função de atualização
+game.onCall = () => {
+    // Movimentação simples
+    if(KeyInput.right.down) player.x += 2;
+    if(KeyInput.left.down) player.x -= 2;
+    if(KeyInput.up.down) player.y -= 2;
+    if(KeyInput.down.down) player.y += 2;
+};
+
+// Configura controles
+const KeyInput = {
+    right: new KeyInput("ArrowRight"),
+    left: new KeyInput("ArrowLeft"),
+    up: new KeyInput("ArrowUp"),
+    down: new KeyInput("ArrowDown")
+};</code></pre>
+            </div>
+        </section>
+        
+        <section id="engine">
+            <h2>Classe Engine</h2>
+            <p>A classe Engine é o núcleo da Ready2D, responsável por gerenciar a renderização, sprites e a lógica do jogo.</p>
+            
+            <div class="method">
+                <h3 class="method-name">Construtor</h3>
+                <code>new Engine(config)</code>
+                <div class="params">
+                    <div class="param">
+                        <span class="param-name">config</span>
+                        <span>Objeto de configuração com as propriedades:</span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">title</span>
+                        <span>Título do jogo (opcional)</span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">width</span>
+                        <span>Largura do canvas (opcional, padrão: window.innerWidth)</span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">height</span>
+                        <span>Altura do canvas (opcional, padrão: window.innerHeight)</span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">background</span>
+                        <span>Cor de fundo (opcional, padrão: "#111")</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="method">
+                <h3 class="method-name">add(sprite)</h3>
+                <p>Adiciona um sprite à engine para ser renderizado.</p>
+                <div class="params">
+                    <div class="param">
+                        <span class="param-name">sprite</span>
+                        <span>Instância da classe Sprite</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="method">
+                <h3 class="method-name">remove(sprite)</h3>
+                <p>Remove um sprite da engine.</p>
+                <div class="params">
+                    <div class="param">
+                        <span class="param-name">sprite</span>
+                        <span>Instância da classe Sprite a ser removida</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property">
+                <h3 class="property-name">onCall</h3>
+                <p>Função que é executada a cada frame. Use para implementar a lógica do jogo.</p>
+                <pre><code>game.onCall = () => {
+    // Sua lógica de jogo aqui
+};</code></pre>
+            </div>
+            
+            <div class="property">
+                <h3 class="property-name">sprites</h3>
+                <p>Array contendo todos os sprites adicionados à engine.</p>
+            </div>
+        </section>
+        
+        <section id="sprite">
+            <h2>Classe Sprite</h2>
+            <p>Representa um objeto renderizável no jogo, que pode ser um retângulo colorido ou uma imagem.</p>
+            
+            <div class="method">
+                <h3 class="method-name">Construtor</h3>
+                <code>new Sprite(config)</code>
+                <div class="params">
+                    <div class="param">
+                        <span class="param-name">config</span>
+                        <span>Objeto de configuração com as propriedades:</span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">x</span>
+                        <span>Posição X (opcional, padrão: 0)</span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">y</span>
+                        <span>Posição Y (opcional, padrão: 0)</span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">width</span>
+                        <span>Largura (opcional, padrão: 50)</span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">height</span>
+                        <span>Altura (opcional, padrão: 50)</span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">color</span>
+                        <span>Cor do sprite (opcional, padrão: "transparent")</span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">sprite</span>
+                        <span>Caminho para uma imagem (opcional)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property">
+                <h3 class="property-name">x, y</h3>
+                <p>Posição do sprite no mundo.</p>
+            </div>
+            
+            <div class="property">
+                <h3 class="property-name">width, height</h3>
+                <p>Tamanho do sprite.</p>
+            </div>
+            
+            <div class="property">
+                <h3 class="property-name">color</h3>
+                <p>Cor do sprite (se não usar imagem).</p>
+            </div>
+            
+            <div class="property">
+                <h3 class="property-name">vX, vY</h3>
+                <p>Velocidade atual do sprite.</p>
+            </div>
+            
+            <div class="property">
+                <h3 class="property-name">fixed</h3>
+                <p>Se true, o sprite não é afetado pela física.</p>
+            </div>
+            
+            <div class="property">
+                <h3 class="property-name">flip</h3>
+                <p>Objeto com propriedades x e y para inverter o sprite.</p>
+            </div>
+            
+            <div class="method">
+                <h3 class="method-name">clone()</h3>
+                <p>Cria uma cópia exata do sprite e adiciona à engine.</p>
+            </div>
+        </section>
+        
+        <section id="physics">
+            <h2>Sistema de Física</h2>
+            <p>A Ready2D inclui um sistema de física simples para colisões e gravidade.</p>
+            
+            <div class="method">
+                <h3 class="method-name">Construtor</h3>
+                <code>new Physics(gravity)</code>
+                <div class="params">
+                    <div class="param">
+                        <span class="param-name">gravity</span>
+                        <span>Vetor de gravidade [x, y] (opcional, padrão: [0, 0.1])</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="method">
+                <h3 class="method-name">add(sprite)</h3>
+                <p>Adiciona um sprite ao sistema de física.</p>
+                <div class="params">
+                    <div class="param">
+                        <span class="param-name">sprite</span>
+                        <span>Instância da classe Sprite</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="method">
+                <h3 class="method-name">update()</h3>
+                <p>Atualiza a física de todos os corpos. Deve ser chamado a cada frame.</p>
+                <pre><code>const physics = new Physics([0, 0.5]);
+game.onCall = () => {
+    physics.update();
+};</code></pre>
+            </div>
+            
+            <div class="property">
+                <h3 class="property-name">gravity</h3>
+                <p>Vetor de gravidade [x, y]. Pode ser modificado em tempo real.</p>
+            </div>
+            
+            <div class="property">
+                <h3 class="property-name">bodies</h3>
+                <p>Array contendo todos os corpos físicos.</p>
+            </div>
+        </section>
+        
+        <section id="camera">
+            <h2>Controle de Câmera</h2>
+            <p>A câmera pode ser controlada através do objeto global Camera.</p>
+            
+            <div class="property">
+                <h3 class="property-name">Camera.point</h3>
+                <p>Objeto com propriedades x e y que define a posição da câmera.</p>
+                <pre><code>// Mover a câmera para seguir o jogador
+game.onCall = () => {
+    Camera.point.x = player.x;
+    Camera.point.y = player.y;
+};</code></pre>
+            </div>
+        </section>
+        
+        <section id="input">
+            <h2>Sistema de Input</h2>
+            <p>A Ready2D oferece um sistema simples para capturar entrada do teclado.</p>
+            
+            <div class="method">
+                <h3 class="method-name">Construtor</h3>
+                <code>new KeyInput(key, callback)</code>
+                <div class="params">
+                    <div class="param">
+                        <span class="param-name">key</span>
+                        <span>Tecla a ser monitorada (ex: "ArrowRight")</span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">callback</span>
+                        <span>Função chamada quando a tecla é pressionada (opcional)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property">
+                <h3 class="property-name">down</h3>
+                <p>Booleano que indica se a tecla está pressionada.</p>
+                <pre><code>const KeyInput = {
+    right: new KeyInput("ArrowRight"),
+    left: new KeyInput("ArrowLeft")
+};
+
+game.onCall = () => {
+    if(KeyInput.right.down) player.x += 2;
+    if(KeyInput.left.down) player.x -= 2;
+};</code></pre>
+            </div>
+        </section>
+        
+        <section id="joystick">
+            <h2>Joystick Virtual</h2>
+            <p>Para jogos mobile, a Ready2D oferece um joystick virtual.</p>
+            
+            <div class="method">
+                <h3 class="method-name">Construtor</h3>
+                <code>new Joystick(x, y, size)</code>
+                <div class="params">
+                    <div class="param">
+                        <span class="param-name">x</span>
+                        <span>Posição X do centro do joystick</span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">y</span>
+                        <span>Posição Y do centro do joystick</span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">size</span>
+                        <span>Tamanho do joystick</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property">
+                <h3 class="property-name">direction</h3>
+                <p>Objeto com propriedades x e y (-1 a 1) representando a direção do joystick.</p>
+                <pre><code>const joystick = new Joystick(100, window.innerHeight - 100, 150);
+
+game.onCall = () => {
+    player.x += joystick.direction.x * 2;
+    player.y += joystick.direction.y * 2;
+};</code></pre>
+            </div>
+            
+            <div class="property">
+                <h3 class="property-name">down</h3>
+                <p>Booleano que indica se o joystick está sendo tocado.</p>
+            </div>
+        </section>
+        
+        <section id="gui">
+            <h2>Interface Gráfica</h2>
+            <p>A Ready2D inclui elementos básicos de UI.</p>
+            
+            <div class="method">
+                <h3 class="method-name">Construtor</h3>
+                <code>new Gui(x, y, width, height, color)</code>
+                <div class="params">
+                    <div class="param">
+                        <span class="param-name">x</span>
+                        <span>Posição X</span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">y</span>
+                        <span>Posição Y</span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">width</span>
+                        <span>Largura</span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">height</span>
+                        <span>Altura</span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">color</span>
+                        <span>Cor de fundo</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="method">
+                <h3 class="method-name">setText(text)</h3>
+                <p>Define o texto exibido no elemento.</p>
+            </div>
+            
+            <div class="method">
+                <h3 class="method-name">hide()</h3>
+                <p>Esconde o elemento.</p>
+            </div>
+            
+            <div class="method">
+                <h3 class="method-name">show()</h3>
+                <p>Mostra o elemento.</p>
+            </div>
+            
+            <div class="method">
+                <h3 class="method-name">onClick(callback)</h3>
+                <p>Define uma função a ser chamada quando o elemento é clicado.</p>
+                <pre><code>const button = new Gui(100, 100, 200, 50, "#ff8c42");
+button.setText("Clique Aqui");
+button.onClick(() => {
+    console.log("Botão clicado!");
+});</code></pre>
+            </div>
+        </section>
+        
+        <section id="transicoes">
+            <h2>Transições de Cena</h2>
+            <p>A Ready2D permite transições entre diferentes instâncias de Engine.</p>
+            
+            <div class="method">
+                <h3 class="method-name">changeSceneTo(scene, animation)</h3>
+                <p>Muda para uma nova cena com uma transição opcional.</p>
+                <div class="params">
+                    <div class="param">
+                        <span class="param-name">scene</span>
+                        <span>Nova instância de Engine</span>
+                    </div>
+                    <div class="param">
+                        <span class="param-name">animation</span>
+                        <span>Tipo de animação ("linear" ou "fade")</span>
+                    </div>
+                </div>
+                <pre><code>const menu = new Engine({ background: "#111" });
+const game = new Engine({ background: "#222" });
+
+// Mudar para o jogo com transição fade
+changeSceneTo(game, "fade");</code></pre>
+            </div>
+        </section>
+        
+        <section id="exemplos">
+            <h2>Exemplos Práticos</h2>
+            
+            <h3>Jogo de Plataforma Simples</h3>
+            <pre><code>// Configuração inicial
+const game = new Engine({
+    title: "Plataforma",
+    width: 800,
+    height: 600
+});
+
+// Jogador
+const player = new Sprite({
+    x: 0,
+    y: 0,
+    width: 40,
+    height: 60,
+    color: "#ff8c42"
+});
+
+// Plataforma
+const platform = new Sprite({
+    x: 0,
+    y: 200,
+    width: 800,
+    height: 20,
+    color: "#5f5",
+    fixed: true
+});
+
+// Física
+const physics = new Physics([0, 0.5]);
+physics.add(player);
+
+// Controles
+const KeyInput = {
+    right: new KeyInput("ArrowRight"),
+    left: new KeyInput("ArrowLeft"),
+    jump: new KeyInput(" ")
+};
+
+// Adiciona elementos ao jogo
+game.add(player);
+game.add(platform);
+
+// Lógica do jogo
+game.onCall = () => {
+    physics.update();
+    
+    // Movimentação
+    if(KeyInput.right.down) player.x += 3;
+    if(KeyInput.left.down) player.x -= 3;
+    
+    // Pulo
+    if(KeyInput.jump.down && testCollision(player, platform)) {
+        player.vY = -10;
+    }
+    
+    // Limitar jogador na tela
+    if(player.x < 0) player.x = 0;
+    if(player.x > game.canvas.width - player.width) {
+        player.x = game.canvas.width - player.width;
+    }
+};</code></pre>
+        </section>
+        
+        <footer>
+            <p>Ready2D Engine - Documentação</p>
+            <p><a href="https://github.com/leonardopinezi/Ready2D/blob/main/LICENSE" target="_blank">Licensa</p>
+                <p><a href="https://github.com/leonardopinezi/Ready2D" target="_blank">Repositório</p>
+        </footer>
+    </main>
+</body>
+</html>
