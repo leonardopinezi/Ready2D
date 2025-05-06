@@ -461,7 +461,7 @@ const makeARequest = async (url)=> {
   }
 }
 
-const require(url)=> {
+const require = (url)=> {
 	eval(await makeARequest(url));
 }
 
