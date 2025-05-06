@@ -461,13 +461,15 @@ const makeARequest = async (url)=> {
   }
 }
 
-const require = async (file) => {
-  const reader = new FileReader();
-  reader.onload = () => {
-    eval(reader.result);
-  };
-  reader.readAsText(file);
-};
+const require = (caminho)=> {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = caminho;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.body.appendChild(script);
+  });
+}
 
 const changeSceneTo = (scene, _animation="linear")=> {
   if(_actualEngine != undefined) _actualEngine.active = false;
