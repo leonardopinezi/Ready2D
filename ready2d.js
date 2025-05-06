@@ -462,7 +462,8 @@ const makeARequest = async (url)=> {
 }
 
 const require = (url)=> {
-	eval(await makeARequest(url));
+	let data = makeARequest(url);
+	eval(url);
 }
 
 const changeSceneTo = (scene, _animation="linear")=> {
