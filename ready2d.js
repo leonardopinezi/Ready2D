@@ -461,10 +461,13 @@ const makeARequest = async (url)=> {
   }
 }
 
-const require = (url)=> {
-	let data = makeARequest(url);
-	eval(url);
-}
+const require = async (file) => {
+  const reader = new FileReader();
+  reader.onload = () => {
+    eval(reader.result);
+  };
+  reader.readAsText(file);
+};
 
 const changeSceneTo = (scene, _animation="linear")=> {
   if(_actualEngine != undefined) _actualEngine.active = false;
