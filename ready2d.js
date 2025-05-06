@@ -216,21 +216,23 @@ class Physics {
 	}
 }
 
-const testCollision = (rect1, rect2, fat=0)=> {
-  return (
-    rect1.x + fat < rect2.x + fat + rect1.width + fat &&
-    rect1.x + fat + rect2.width + fat + fat > rect2.x + fat &&
-    rect1.y + fat < rect2.y + fat + rect2.height + fat &&
-    rect1.y + fat + rect1.height + fat + fat > rect2.y + fat
-  );
-}
+const testCollision = (rectangle1, rectangle2) => {
+  const dx = rectangle1.x - rectangle2.x;
+  const dy = rectangle1.y - rectangle2.y;
+
+  const overlapX = (rectangle1.width / 2 + rectangle2.width / 2) - Math.abs(dx);
+  const overlapY = (rectangle1.height / 2 + rectangle2.height / 2) - Math.abs(dy);
+
+  // Retorna true se houver sobreposição em ambas as direções (horizontal e vertical)
+  return overlapX > 0 && overlapY > 0;
+};
 
 const reflect_if_colliding = (rectangle1, rectangle2)=> {
   const dx = rectangle1.x - rectangle2.x;
   const dy = rectangle1.y - rectangle2.y;
 
-  const overlapX = (rectangle1.width/2 + rectangle2.width/2) - Math.abs(dx);
-  const overlapY = (rectangle1.height/2 + rectangle2.height/2) - Math.abs(dy);
+  const overlapX = (rectangle1.width/2-1 + rectangle2.width/2-1) - Math.abs(dx);
+  const overlapY = (rectangle1.height/2-1 + rectangle2.height/2-1) - Math.abs(dy);
 
   if(!rectangle1.fixed) if (overlapX > 0 && overlapY > 0) {
     if (overlapX > overlapY) {
@@ -246,7 +248,7 @@ const reflect_if_colliding = (rectangle1, rectangle2)=> {
         rectangle1.x -= overlapX;
       }
 
-      rectangle1.y += (overlapX*overlapX)+rectangle1.vY;
+      rectangle1.vY += overlapY*2;
       rectangle1.vX = -rectangle1.vX*2;
     }
     rectangle1.vY = -rectangle1.vY/(1000);
@@ -457,6 +459,10 @@ const makeARequest = async (url)=> {
   } catch (error) {
       console.error("Error fetching data:", error);
   }
+}
+
+const require(url)=> {
+	eval(await makeARequest(url));
 }
 
 const changeSceneTo = (scene, _animation="linear")=> {
