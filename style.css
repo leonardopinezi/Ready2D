@@ -1,15 +1,15 @@
 :root {
     --bg-dark: #121212;
-    --bg-darker: #0d0d0d;
-    --accent-1: #4cc9f0; /* Azul claro */
-    --accent-2: #f72585; /* Rosa */
-    --accent-3: #7209b7; /* Roxo */
-    --accent-4: #3a86ff; /* Azul */
-    --text: #e0e0e0;
+    --bg-darker: #1a1a1a;
+    --accent-1: #90caf9;
+    --accent-2: #f48fb1;
+    --accent-3: #ce93d8;
+    --accent-4: #64b5f6;
+    --text: #f5f5f5;
     --text-light: #ffffff;
     --code-bg: #1e1e2e;
-    --success: #4ade80; /* Verde */
-    --warning: #fbbf24; /* Amarelo */
+    --success: #81c784;
+    --warning: #ffeb3b;
 }
 
 * {
@@ -25,8 +25,8 @@ body {
     color: var(--text);
     line-height: 1.6;
     background-image: 
-        radial-gradient(circle at 10% 20%, rgba(114, 9, 183, 0.1) 0%, transparent 20%),
-        radial-gradient(circle at 90% 80%, rgba(74, 201, 240, 0.1) 0%, transparent 20%);
+        radial-gradient(circle at 10% 20%, rgba(114, 9, 183, 0.06) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(74, 201, 240, 0.06) 0%, transparent 20%);
 }
 
 @keyframes gradientBG {
@@ -37,10 +37,12 @@ body {
 
 header {
     background-color: var(--bg-darker);
-    padding: 3rem 2rem;
-    border-bottom: 2px solid var(--accent-3);
+    padding: 2rem 2rem;
     position: relative;
     overflow: hidden;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    backdrop-filter: blur(6px);
 }
 
 header::after {
@@ -107,12 +109,12 @@ nav {
     left: 0;
     top: 0;
     height: 100vh;
-    width: 280px;
+    width: 260px;
     padding: 2rem 1.5rem;
     overflow-y: auto;
-    border-right: 1px solid rgba(114, 9, 183, 0.2);
-    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.2);
     z-index: 100;
+    border-radius: 0 16px 16px 0;
 }
 
 nav ul {
@@ -157,15 +159,19 @@ nav a:hover {
 }
 
 main {
-    margin-left: 280px;
+    margin-left: 260px;
     padding: 3rem;
-    max-width: 1000px;
+    max-width: 960px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 16px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(3px);
 }
 
 code, pre {
     background-color: var(--code-bg);
     padding: 0.3rem 0.6rem;
-    border-radius: 6px;
+    border-radius: 8px;
     font-family: 'Fira Code', 'Courier New', monospace;
     border-left: 3px solid var(--accent-4);
 }
@@ -174,15 +180,15 @@ pre {
     padding: 1.2rem;
     margin: 1.5rem 0;
     overflow-x: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
 }
 
 pre:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 }
 
 pre::before {
@@ -193,18 +199,18 @@ pre::before {
     width: 100%;
     height: 30px;
     background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3), var(--accent-4));
-    opacity: 0.1;
-    border-radius: 8px 8px 0 0;
+    opacity: 0.08;
+    border-radius: 12px 12px 0 0;
 }
 
 .method, .property {
     background-color: var(--bg-darker);
     padding: 1.5rem;
-    margin: 1.5rem 0;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    border-left: 4px solid var(--accent-3);
+    margin: 2rem 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border-left: 5px solid var(--accent-3);
 }
 
 .method:hover, .property:hover {
@@ -256,7 +262,7 @@ footer {
     text-align: center;
     padding: 3rem 2rem;
     margin-top: 4rem;
-    border-top: 1px solid rgba(114, 9, 183, 0.3);
+    border-top: 1px solid rgba(114, 9, 183, 0.15);
     position: relative;
 }
 
@@ -273,14 +279,57 @@ footer::before {
     background-size: 400% 400%;
 }
 
+/* Botões */
+.copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    color: var(--text);
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    backdrop-filter: blur(4px);
+}
+
+.copy-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+}
+
+.copy-btn.copied {
+    background: var(--success);
+    color: var(--bg-darker);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-darker);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--accent-3);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-2);
+}
+
+/* Responsividade */
 @media (max-width: 992px) {
     nav {
-        width: 240px;
+        width: 220px;
         padding: 1.5rem 1rem;
     }
-    
     main {
-        margin-left: 240px;
+        margin-left: 220px;
         padding: 2rem;
     }
 }
@@ -290,36 +339,32 @@ footer::before {
         width: 100%;
         height: auto;
         position: relative;
-        border-right: none;
+        border-radius: 0;
+        box-shadow: none;
         border-bottom: 1px solid rgba(114, 9, 183, 0.2);
     }
-
     #navbar {
         display: flex;
         font-size: 15px;
         flex-wrap: wrap;
         gap: 20px;
     }
-
     #navbar * {
         margin: 0;
     }
-    
     main {
         margin-left: 0;
         padding: 2rem 1.5rem;
     }
-    
     h1 {
         font-size: 2.2rem;
     }
-    
     h2 {
         font-size: 1.8rem;
     }
 }
 
-/* Animações e efeitos */
+/* Animações */
 @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
@@ -341,55 +386,11 @@ footer::before {
     left: 0;
     width: 100%;
     height: 30%;
-    background-color: rgba(247, 37, 133, 0.3);
+    background-color: rgba(247, 37, 133, 0.2);
     z-index: -1;
     transition: height 0.3s;
 }
 
 .highlight:hover::after {
     height: 50%;
-}
-
-/* Botões e interações */
-.copy-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: var(--text);
-    padding: 0.3rem 0.6rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s;
-    font-family: 'Fira Code', monospace;
-    font-size: 0.8rem;
-}
-
-.copy-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.copy-btn.copied {
-    background: var(--success);
-    color: var(--bg-darker);
-}
-
-/* Scrollbar personalizada */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--bg-darker);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--accent-3);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--accent-2);
 }
